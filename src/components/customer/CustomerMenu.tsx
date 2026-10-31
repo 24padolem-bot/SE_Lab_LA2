@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useCafe } from '../../context/CafeContext';
 import { Category, MenuItem } from '../../types/cafe';
 import { VegBadge } from '../common/VegBadge';
+import { CAFE_IMAGES, resolveImageUrl } from '../../assets/images';
 import { 
   Search, 
   Plus, 
@@ -240,12 +241,12 @@ export const CustomerMenu: React.FC<CustomerMenuProps> = ({
                 {/* Food Image */}
                 <div className="relative aspect-[4/3] bg-[#F2ECE2] overflow-hidden">
                   <img
-                    src={item.image}
+                    src={resolveImageUrl(item.image)}
                     alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/src/assets/images/cafe_hero_ambience_1793381416203.jpg';
+                      (e.target as HTMLImageElement).src = CAFE_IMAGES.heroAmbience;
                     }}
                   />
                   {/* Diet Mark */}

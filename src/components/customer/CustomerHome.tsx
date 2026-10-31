@@ -2,6 +2,7 @@ import React from 'react';
 import { useCafe } from '../../context/CafeContext';
 import { Category, MenuItem } from '../../types/cafe';
 import { VegBadge } from '../common/VegBadge';
+import { CAFE_IMAGES, resolveImageUrl } from '../../assets/images';
 import { 
   Coffee, 
   Search, 
@@ -54,7 +55,7 @@ export const CustomerHome: React.FC<CustomerHomeProps> = ({
       <section className="relative overflow-hidden bg-[#2C1810] text-[#FBF9F5] rounded-3xl mx-4 sm:mx-6 lg:mx-8 mt-4 shadow-xl">
         <div className="absolute inset-0 z-0">
           <img
-            src="/src/assets/images/cafe_hero_ambience_1793381416203.jpg"
+            src={CAFE_IMAGES.heroAmbience}
             alt="Brew and Bean Cafe Interior"
             className="w-full h-full object-cover opacity-35 filter brightness-90 contrast-105"
             referrerPolicy="no-referrer"
@@ -237,13 +238,13 @@ export const CustomerHome: React.FC<CustomerHomeProps> = ({
                 {/* Product Image Container */}
                 <div className="relative aspect-[4/3] bg-[#F2ECE2] overflow-hidden">
                   <img
-                    src={item.image}
+                    src={resolveImageUrl(item.image)}
                     alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
                       // Fallback image handling
-                      (e.target as HTMLImageElement).src = '/src/assets/images/cafe_hero_ambience_1793381416203.jpg';
+                      (e.target as HTMLImageElement).src = CAFE_IMAGES.heroAmbience;
                     }}
                   />
                   <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-xs px-2 py-1 rounded-md shadow-xs">
@@ -336,7 +337,7 @@ export const CustomerHome: React.FC<CustomerHomeProps> = ({
           </div>
           <div className="w-full lg:w-96 rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-stone-200">
             <img
-              src="/src/assets/images/fudge_brownie_dessert_1793381413537.jpg"
+              src={CAFE_IMAGES.brownie}
               alt="Artisanal Bakery Dessert"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

@@ -15,6 +15,7 @@ import {
   ToggleRight,
   SlidersHorizontal
 } from 'lucide-react';
+import { CAFE_IMAGES, resolveImageUrl } from '../../assets/images';
 
 const CATEGORIES: Category[] = [
   'Coffee',
@@ -26,11 +27,11 @@ const CATEGORIES: Category[] = [
 ];
 
 const PRESET_IMAGES = [
-  { label: 'Hot Latte Art', url: '/src/assets/images/cappuccino_latte_art_1793381412162.jpg' },
-  { label: 'Cold Brew / Frappe', url: '/src/assets/images/iced_cold_coffee_1793381423310.jpg' },
-  { label: 'Burger & Fries', url: '/src/assets/images/gourmet_cafe_burger_1793381415002.jpg' },
-  { label: 'Fudge Brownie', url: '/src/assets/images/fudge_brownie_dessert_1793381413537.jpg' },
-  { label: 'Cafe Ambience', url: '/src/assets/images/cafe_hero_ambience_1793381416203.jpg' },
+  { label: 'Hot Latte Art', url: CAFE_IMAGES.cappuccino },
+  { label: 'Cold Brew / Frappe', url: CAFE_IMAGES.coldCoffee },
+  { label: 'Burger & Fries', url: CAFE_IMAGES.burger },
+  { label: 'Fudge Brownie', url: CAFE_IMAGES.brownie },
+  { label: 'Cafe Ambience', url: CAFE_IMAGES.heroAmbience },
 ];
 
 export const AdminMenu: React.FC = () => {
@@ -192,12 +193,12 @@ export const AdminMenu: React.FC = () => {
             <div className="flex gap-3">
               <div className="w-20 h-20 rounded-xl bg-[#F5EFE6] overflow-hidden shrink-0 border border-[#EAE2D5]">
                 <img
-                  src={item.image}
+                  src={resolveImageUrl(item.image)}
                   alt={item.name}
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/src/assets/images/cafe_hero_ambience_1793381416203.jpg';
+                    (e.target as HTMLImageElement).src = CAFE_IMAGES.heroAmbience;
                   }}
                 />
               </div>
@@ -369,7 +370,7 @@ export const AdminMenu: React.FC = () => {
                         formImage === img.url ? 'border-[#3D2314] ring-2 ring-[#3D2314]/20' : 'border-[#EAE2D5] opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
+                      <img src={resolveImageUrl(img.url)} alt={img.label} className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>

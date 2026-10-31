@@ -10,6 +10,7 @@ import {
   CustomerProfile
 } from '../types/cafe';
 import { INITIAL_MENU_ITEMS, INITIAL_ORDERS, INITIAL_INVENTORY } from '../data/initialData';
+import { resolveImageUrl } from '../assets/images';
 
 interface CafeContextType {
   menu: MenuItem[];
@@ -78,7 +79,14 @@ export const CafeProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [menu, setMenu] = useState<MenuItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.MENU);
-      return saved ? JSON.parse(saved) : INITIAL_MENU_ITEMS;
+      if (saved) {
+        const parsed: MenuItem[] = JSON.parse(saved);
+        return parsed.map(item => ({
+          ...item,
+          image: resolveImageUrl(item.image)
+        }));
+      }
+      return INITIAL_MENU_ITEMS;
     } catch {
       return INITIAL_MENU_ITEMS;
     }
@@ -108,7 +116,17 @@ export const CafeProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.CART);
-      return saved ? JSON.parse(saved) : [];
+      if (saved) {
+        const parsed: CartItem[] = JSON.parse(saved);
+        return parsed.map(ci => ({
+          ...ci,
+          item: {
+            ...ci.item,
+            image: resolveImageUrl(ci.item.image)
+          }
+        }));
+      }
+      return [];
     } catch {
       return [];
     }
@@ -306,6 +324,7 @@ export const CafeProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addMenuItem = (itemData: Omit<MenuItem, 'id'>) => {
     const newItem: MenuItem = {
       ...itemData,
+      image: resolveImageUrl(itemData.image),
       id: `item-${Date.now()}`
     };
     setMenu(prev => [newItem, ...prev]);
@@ -313,7 +332,11 @@ export const CafeProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateMenuItem = (item: MenuItem) => {
-    setMenu(prev => prev.map(i => i.id === item.id ? item : i));
+    const sanitized = {
+      ...item,
+      image: resolveImageUrl(item.image)
+    };
+    setMenu(prev => prev.map(i => i.id === item.id ? sanitized : i));
     showToast('Menu Updated', `${item.name} details saved.`, 'info');
   };
 

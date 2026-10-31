@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCafe } from '../../context/CafeContext';
 import { VegBadge } from '../common/VegBadge';
+import { CAFE_IMAGES, resolveImageUrl } from '../../assets/images';
 import { Order, OrderType, PaymentMethod } from '../../types/cafe';
 import { 
   X, 
@@ -225,12 +226,12 @@ export const CustomerCartDrawer: React.FC<CustomerCartDrawerProps> = ({
                     <div key={item.id} className="py-3 first:pt-1 last:pb-1 flex items-center gap-3">
                       <div className="w-12 h-12 rounded-lg bg-[#F5EFE6] overflow-hidden shrink-0">
                         <img
-                          src={item.image}
+                          src={resolveImageUrl(item.image)}
                           alt={item.name}
                           className="w-full h-full object-cover"
                           referrerPolicy="no-referrer"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/src/assets/images/cafe_hero_ambience_1793381416203.jpg';
+                            (e.target as HTMLImageElement).src = CAFE_IMAGES.heroAmbience;
                           }}
                         />
                       </div>
